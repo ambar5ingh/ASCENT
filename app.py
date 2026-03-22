@@ -65,7 +65,7 @@ html, body {{ background: {LIGHT_BG} !important; }}
 }}
 .hero-bg {{
     position: absolute; inset: 0;
-    background-image: url("data:image/png;base64,{SB}");
+    background-image: url("data:image/png;base64,{SOLAR_BG}");
     background-size: cover; background-position: center 35%;
     filter: brightness(0.22) saturate(0.6);
 }}
