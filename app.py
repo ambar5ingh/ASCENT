@@ -145,10 +145,14 @@ section[data-testid="stSidebar"] .streamlit-expanderContent {{
 section[data-testid="stSidebar"] input,
 section[data-testid="stSidebar"] .stTextInput input,
 section[data-testid="stSidebar"] .stNumberInput input {{
-    background: rgba(255,255,255,0.1) !important;
+    background: rgba(255,255,255,0.92) !important;
     border: 1px solid rgba(74,173,168,0.4) !important;
-    color: #FFFFFF !important;
+    color: #000000 !important;
     border-radius: 6px !important;
+}}
+section[data-testid="stSidebar"] input::placeholder {{
+    color: #444444 !important;
+    opacity: 1 !important;
 }}
 section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {{
     background: rgba(255,255,255,0.1) !important;
