@@ -940,30 +940,37 @@ with st.sidebar:
         ["— Manual Entry —"] + list(CITY_PRESETS.keys()),
         key="preset_choice"
     )
+    # Initialise emission widget keys in session state.
+    # Use the preset values when a preset is selected; fall back to 0.
+    # setdefault is used so user edits are never overwritten mid-session.
+    _KEY_MAP = {
+        "b1": "Buildings – Residential",
+        "b2": "Buildings – Commercial",
+        "b3": "Buildings – Public & Inst.",
+        "b4": "Buildings – Industrial",
+        "t1": "Transport – On Road",
+        "t2": "Transport – Railway",
+        "t3": "Transport – Water/Aviation",
+        "w1": "Waste – Solid Waste",
+        "w2": "Waste – Organic Treatment",
+        "w3": "Waste – Wastewater",
+        "i1": "IPPU",
+        "a1": "AFOLU",
+    }
+    _last_key = "_last_preset_loaded"
     if preset_choice != "— Manual Entry —":
         p = CITY_PRESETS[preset_choice]
-        # Force-update widget session state whenever preset changes so that
-        # number_input widgets (keyed b1…a1) actually reflect the preset values.
-        _last_key = "_last_preset_loaded"
+        # When the preset changes, push its values into session state
         if st.session_state.get(_last_key) != preset_choice:
             em = p["emissions"]
-            key_map = {
-                "b1": "Buildings – Residential",
-                "b2": "Buildings – Commercial",
-                "b3": "Buildings – Public & Inst.",
-                "b4": "Buildings – Industrial",
-                "t1": "Transport – On Road",
-                "t2": "Transport – Railway",
-                "t3": "Transport – Water/Aviation",
-                "w1": "Waste – Solid Waste",
-                "w2": "Waste – Organic Treatment",
-                "w3": "Waste – Wastewater",
-                "i1": "IPPU",
-                "a1": "AFOLU",
-            }
-            for wkey, sector in key_map.items():
+            for wkey, sector in _KEY_MAP.items():
                 st.session_state[wkey] = em.get(sector, 0)
             st.session_state[_last_key] = preset_choice
+    else:
+        # Manual entry: ensure keys exist with 0 as default (don't overwrite)
+        for wkey in _KEY_MAP:
+            st.session_state.setdefault(wkey, 0)
+        st.session_state[_last_key] = "— Manual Entry —"
     st.divider()
 
     # ── A. Basic Information ──────────────────────────────────────────────────
@@ -1046,26 +1053,26 @@ with st.sidebar:
     base_emissions = {}
 
     with st.expander("Buildings & Energy", expanded=True):
-        base_emissions["Buildings – Residential"]    = st.number_input("Residential",       value=_pe.get("Buildings – Residential",0),    step=1000, format="%d", key="b1")
-        base_emissions["Buildings – Commercial"]     = st.number_input("Commercial",         value=_pe.get("Buildings – Commercial",0),     step=1000, format="%d", key="b2")
-        base_emissions["Buildings – Public & Inst."] = st.number_input("Public & Inst.",    value=_pe.get("Buildings – Public & Inst.",0),  step=500,  format="%d", key="b3")
-        base_emissions["Buildings – Industrial"]     = st.number_input("Industrial/Captive", value=_pe.get("Buildings – Industrial",0),     step=500,  format="%d", key="b4")
+        base_emissions["Buildings – Residential"]    = st.number_input("Residential", step=1000, format="%d", key="b1")
+        base_emissions["Buildings – Commercial"]     = st.number_input("Commercial", step=1000, format="%d", key="b2")
+        base_emissions["Buildings – Public & Inst."] = st.number_input("Public & Inst.", step=500,  format="%d", key="b3")
+        base_emissions["Buildings – Industrial"]     = st.number_input("Industrial/Captive", step=500,  format="%d", key="b4")
 
     with st.expander("Transport"):
-        base_emissions["Transport – On Road"]        = st.number_input("Road (ICE vehicles)", value=_pe.get("Transport – On Road",0),       step=1000, format="%d", key="t1")
-        base_emissions["Transport – Railway"]        = st.number_input("Railway",              value=_pe.get("Transport – Railway",0),       step=500,  format="%d", key="t2")
-        base_emissions["Transport – Water/Aviation"] = st.number_input("Water / Aviation",     value=_pe.get("Transport – Water/Aviation",0),step=100,  format="%d", key="t3")
+        base_emissions["Transport – On Road"]        = st.number_input("Road (ICE vehicles)", step=1000, format="%d", key="t1")
+        base_emissions["Transport – Railway"]        = st.number_input("Railway", step=500,  format="%d", key="t2")
+        base_emissions["Transport – Water/Aviation"] = st.number_input("Water / Aviation", step=100,  format="%d", key="t3")
 
     with st.expander("Waste"):
-        base_emissions["Waste – Solid Waste"]        = st.number_input("Municipal Solid Waste", value=_pe.get("Waste – Solid Waste",0),      step=1000, format="%d", key="w1")
-        base_emissions["Waste – Organic Treatment"]  = st.number_input("Organic Treatment",     value=_pe.get("Waste – Organic Treatment",0), step=100,  format="%d", key="w2")
-        base_emissions["Waste – Wastewater"]         = st.number_input("Wastewater",             value=_pe.get("Waste – Wastewater",0),       step=500,  format="%d", key="w3")
+        base_emissions["Waste – Solid Waste"]        = st.number_input("Municipal Solid Waste", step=1000, format="%d", key="w1")
+        base_emissions["Waste – Organic Treatment"]  = st.number_input("Organic Treatment", step=100,  format="%d", key="w2")
+        base_emissions["Waste – Wastewater"]         = st.number_input("Wastewater", step=500,  format="%d", key="w3")
 
     with st.expander("IPPU"):
-        base_emissions["IPPU"] = st.number_input("Industrial Processes & Product Use", value=_pe.get("IPPU",0), step=1000, format="%d", key="i1")
+        base_emissions["IPPU"] = st.number_input("Industrial Processes & Product Use", step=1000, format="%d", key="i1")
 
     with st.expander("AFOLU"):
-        base_emissions["AFOLU"] = st.number_input("Agriculture, Forestry & Land Use (negative = sink)", value=_pe.get("AFOLU",0), step=500, format="%d", key="a1")
+        base_emissions["AFOLU"] = st.number_input("Agriculture, Forestry & Land Use (negative = sink)", step=500, format="%d", key="a1")
 
     st.divider()
 
