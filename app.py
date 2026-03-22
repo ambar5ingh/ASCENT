@@ -1187,7 +1187,6 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 
 # ── Tab 1 ─────────────────────────────────────────────────────────────────────
 with tab1:
-    if preset_choice != "— Manual Entry —":
     st.plotly_chart(chart_traj(df_ts, city_label, target_pct, base_year),
                     use_container_width=True)
     ca, cb = st.columns(2)
