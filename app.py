@@ -689,7 +689,7 @@ def chart_wedge(df, prefix, label):
         fig.add_trace(go.Scatter(
             x=df["Year"], y=(df[col].clip(lower=0) / 1e6).round(4),
             name=s, mode="lines", stackgroup="one",
-            fillcolor=SECTOR_COLORS[s] + "CC",
+            fillcolor="rgba({},{},{},0.8)".format(*bytes.fromhex(SECTOR_COLORS[s].lstrip("#"))),
             line=dict(color=SECTOR_COLORS[s], width=0.8)
         ))
     fig.update_layout(
