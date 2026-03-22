@@ -721,11 +721,13 @@ def chart_wedge(df, prefix, label):
             line=dict(color=SECTOR_COLORS[s], width=0.8)
         ))
     fig.update_layout(
-        title=f"<b>{label}</b>",
+        title=dict(text=f"<b>{label}</b>", x=0, xanchor="left"),
         xaxis_title="Year", yaxis_title="Mt CO₂e",
-        hovermode="x unified", height=370,
-        legend=dict(orientation="h", yanchor="bottom", y=1.02,
-                    xanchor="right", x=1, font_size=9),
+        hovermode="x unified", height=500,
+        margin=dict(t=40, b=170, l=60, r=20),
+        legend=dict(orientation="h", yanchor="top", y=-0.25,
+                    xanchor="center", x=0.5, font_size=10,
+                    traceorder="reversed", itemwidth=100),
         **CT
     )
     return cax(fig)
