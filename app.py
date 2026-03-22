@@ -101,13 +101,13 @@ html, body {{ background: {LIGHT_BG} !important; }}
 
 /* ── SIDEBAR ─────────────────────────────────────────────────── */
 section[data-testid="stSidebar"] {{
-    background: {NAVY} !important;
-    border-right: none !important;
+    background: #FFFFFF !important;
+    border-right: 1px solid #E5E7EB !important;
 }}
 section[data-testid="stSidebar"] > div {{
-    background: {NAVY} !important;
+    background: #FFFFFF !important;
 }}
-/* ALL sidebar text white */
+/* ALL sidebar text black */
 section[data-testid="stSidebar"] p,
 section[data-testid="stSidebar"] span,
 section[data-testid="stSidebar"] label,
@@ -121,47 +121,47 @@ section[data-testid="stSidebar"] .stNumberInput label,
 section[data-testid="stSidebar"] .stSelectbox label,
 section[data-testid="stSidebar"] .stSlider label,
 section[data-testid="stSidebar"] .stRadio label {{
-    color: {CREAM} !important;
+    color: #111111 !important;
 }}
 section[data-testid="stSidebar"] hr {{
-    border-color: rgba(74,173,168,0.3) !important;
+    border-color: #D1D5DB !important;
 }}
 /* Sidebar expander headers */
 section[data-testid="stSidebar"] .streamlit-expanderHeader {{
-    background: rgba(74,173,168,0.15) !important;
-    border: 1px solid rgba(74,173,168,0.3) !important;
+    background: #F3F4F6 !important;
+    border: 1px solid #D1D5DB !important;
     border-radius: 8px !important;
-    color: {CREAM} !important;
+    color: #111111 !important;
 }}
 section[data-testid="stSidebar"] .streamlit-expanderHeader p {{
-    color: {CREAM} !important; font-weight: 600;
+    color: #111111 !important; font-weight: 600;
 }}
 section[data-testid="stSidebar"] .streamlit-expanderContent {{
-    background: rgba(255,255,255,0.04) !important;
-    border: 1px solid rgba(74,173,168,0.15) !important;
+    background: #FAFAFA !important;
+    border: 1px solid #E5E7EB !important;
     border-top: none !important; border-radius: 0 0 8px 8px !important;
 }}
 /* Sidebar input fields */
 section[data-testid="stSidebar"] input,
 section[data-testid="stSidebar"] .stTextInput input,
 section[data-testid="stSidebar"] .stNumberInput input {{
-    background: rgba(255,255,255,0.92) !important;
-    border: 1px solid rgba(74,173,168,0.4) !important;
+    background: #FFFFFF !important;
+    border: 1px solid #9CA3AF !important;
     color: #000000 !important;
     border-radius: 6px !important;
 }}
 section[data-testid="stSidebar"] input::placeholder {{
-    color: #444444 !important;
+    color: #6B7280 !important;
     opacity: 1 !important;
 }}
 section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {{
-    background: rgba(255,255,255,0.1) !important;
-    border: 1px solid rgba(74,173,168,0.4) !important;
-    color: {CREAM} !important;
+    background: #FFFFFF !important;
+    border: 1px solid #9CA3AF !important;
+    color: #111111 !important;
     border-radius: 6px !important;
 }}
 section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] span {{
-    color: {CREAM} !important;
+    color: #111111 !important;
 }}
 /* Slider */
 section[data-testid="stSidebar"] .stSlider [data-baseweb="slider"] [role="slider"] {{
@@ -169,11 +169,11 @@ section[data-testid="stSidebar"] .stSlider [data-baseweb="slider"] [role="slider
 }}
 section[data-testid="stSidebar"] .stSlider [data-baseweb="slider"] div[data-testid="stTickBarMin"],
 section[data-testid="stSidebar"] .stSlider [data-baseweb="slider"] div[data-testid="stTickBarMax"] {{
-    color: {CREAM} !important;
+    color: #374151 !important;
 }}
 /* Radio */
 section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label span {{
-    color: {CREAM} !important;
+    color: #111111 !important;
 }}
 section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label div {{
     border-color: {TEAL} !important;
@@ -186,7 +186,7 @@ section[data-testid="stSidebar"] .stMarkdown h3 {{
     margin: 0.8rem 0 0.4rem 0;
 }}
 section[data-testid="stSidebar"] .stMarkdown p {{
-    color: rgba(240,234,214,0.7) !important;
+    color: #374151 !important;
     font-size: 0.78rem;
 }}
 
@@ -919,7 +919,6 @@ with st.sidebar:
     )
     if preset_choice != "— Manual Entry —":
         p = CITY_PRESETS[preset_choice]
-        st.info(p["note"], icon="ℹ️")
         # Force-update widget session state whenever preset changes so that
         # number_input widgets (keyed b1…a1) actually reflect the preset values.
         _last_key = "_last_preset_loaded"
@@ -1168,7 +1167,6 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 # ── Tab 1 ─────────────────────────────────────────────────────────────────────
 with tab1:
     if preset_choice != "— Manual Entry —":
-        st.info(f"**Loaded preset:** {preset_choice} — {CITY_PRESETS[preset_choice]['note']}", icon="📍")
     st.plotly_chart(chart_traj(df_ts, city_label, target_pct, base_year),
                     use_container_width=True)
     ca, cb = st.columns(2)
