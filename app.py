@@ -100,14 +100,15 @@ html, body {{ background: {LIGHT_BG} !important; }}
 }}
 
 /* ── SIDEBAR ─────────────────────────────────────────────────── */
-section[data-testid="stSidebar"] {{
+section[data-testid="stSidebar"],
+section[data-testid="stSidebar"] > div,
+section[data-testid="stSidebar"] > div > div,
+section[data-testid="stSidebar"] > div > div > div {{
     background: #FFFFFF !important;
     border-right: 1px solid #E5E7EB !important;
 }}
-section[data-testid="stSidebar"] > div {{
-    background: #FFFFFF !important;
-}}
-/* ALL sidebar text black */
+/* ALL sidebar text black — cast a wide net */
+section[data-testid="stSidebar"] *,
 section[data-testid="stSidebar"] p,
 section[data-testid="stSidebar"] span,
 section[data-testid="stSidebar"] label,
@@ -127,41 +128,61 @@ section[data-testid="stSidebar"] hr {{
     border-color: #D1D5DB !important;
 }}
 /* Sidebar expander headers */
-section[data-testid="stSidebar"] .streamlit-expanderHeader {{
+section[data-testid="stSidebar"] .streamlit-expanderHeader,
+section[data-testid="stSidebar"] details summary {{
     background: #F3F4F6 !important;
     border: 1px solid #D1D5DB !important;
     border-radius: 8px !important;
     color: #111111 !important;
 }}
-section[data-testid="stSidebar"] .streamlit-expanderHeader p {{
+section[data-testid="stSidebar"] .streamlit-expanderHeader p,
+section[data-testid="stSidebar"] details summary p {{
     color: #111111 !important; font-weight: 600;
 }}
-section[data-testid="stSidebar"] .streamlit-expanderContent {{
+section[data-testid="stSidebar"] .streamlit-expanderContent,
+section[data-testid="stSidebar"] details > div {{
     background: #FAFAFA !important;
     border: 1px solid #E5E7EB !important;
     border-top: none !important; border-radius: 0 0 8px 8px !important;
 }}
-/* Sidebar input fields */
+/* Sidebar ALL input fields — typed value must be black */
+section[data-testid="stSidebar"] input[type="number"],
+section[data-testid="stSidebar"] input[type="text"],
 section[data-testid="stSidebar"] input,
 section[data-testid="stSidebar"] .stTextInput input,
-section[data-testid="stSidebar"] .stNumberInput input {{
+section[data-testid="stSidebar"] .stNumberInput input,
+section[data-testid="stSidebar"] [data-baseweb="input"] input,
+section[data-testid="stSidebar"] [data-baseweb="base-input"] input {{
     background: #FFFFFF !important;
     border: 1px solid #9CA3AF !important;
     color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
     border-radius: 6px !important;
 }}
-section[data-testid="stSidebar"] input::placeholder {{
+section[data-testid="stSidebar"] input::placeholder,
+section[data-testid="stSidebar"] [data-baseweb="input"] input::placeholder {{
     color: #6B7280 !important;
+    -webkit-text-fill-color: #6B7280 !important;
     opacity: 1 !important;
 }}
-section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {{
+/* Input wrapper backgrounds */
+section[data-testid="stSidebar"] [data-baseweb="input"],
+section[data-testid="stSidebar"] [data-baseweb="base-input"],
+section[data-testid="stSidebar"] .stNumberInput > div,
+section[data-testid="stSidebar"] .stNumberInput > div > div {{
+    background: #FFFFFF !important;
+}}
+section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div,
+section[data-testid="stSidebar"] [data-baseweb="select"] > div {{
     background: #FFFFFF !important;
     border: 1px solid #9CA3AF !important;
     color: #111111 !important;
     border-radius: 6px !important;
 }}
-section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] span {{
+section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] span,
+section[data-testid="stSidebar"] [data-baseweb="select"] span {{
     color: #111111 !important;
+    -webkit-text-fill-color: #111111 !important;
 }}
 /* Slider */
 section[data-testid="stSidebar"] .stSlider [data-baseweb="slider"] [role="slider"] {{
@@ -170,10 +191,12 @@ section[data-testid="stSidebar"] .stSlider [data-baseweb="slider"] [role="slider
 section[data-testid="stSidebar"] .stSlider [data-baseweb="slider"] div[data-testid="stTickBarMin"],
 section[data-testid="stSidebar"] .stSlider [data-baseweb="slider"] div[data-testid="stTickBarMax"] {{
     color: #374151 !important;
+    -webkit-text-fill-color: #374151 !important;
 }}
 /* Radio */
 section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label span {{
     color: #111111 !important;
+    -webkit-text-fill-color: #111111 !important;
 }}
 section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label div {{
     border-color: {TEAL} !important;
@@ -187,6 +210,7 @@ section[data-testid="stSidebar"] .stMarkdown h3 {{
 }}
 section[data-testid="stSidebar"] .stMarkdown p {{
     color: #374151 !important;
+    -webkit-text-fill-color: #374151 !important;
     font-size: 0.78rem;
 }}
 
@@ -841,7 +865,6 @@ CITY_PRESETS = {
         },
         "ep_overrides": {"Buildings – Industrial": 0.12, "Transport – On Road": 0.12},
         "ha_overrides": {"Buildings – Industrial": 0.40, "Transport – On Road": 0.38},
-        "note": "Data based on ASCENT Tech Note — Surat GHG inventory (WRI India, 2024). Textile & petrochemical industrial base drives high IPPU and building-industrial emissions."
     },
     "Nashik, Maharashtra": {
         "state": "Maharashtra", "district": "Nashik", "tier": "City / ULB",
@@ -864,7 +887,6 @@ CITY_PRESETS = {
         },
         "ep_overrides": {},
         "ha_overrides": {},
-        "note": "Data based on ASCENT Tech Note — Nashik city profile. Wine, manufacturing, and growing IT sector; composite climate zone with moderate heating-cooling demand."
     },
     "Wayanad, Kerala": {
         "state": "Kerala", "district": "Wayanad", "tier": "District",
@@ -887,7 +909,6 @@ CITY_PRESETS = {
         },
         "ep_overrides": {"AFOLU": 0.10},
         "ha_overrides": {"AFOLU": 0.25, "Transport – On Road": 0.30},
-        "note": "Data based on ASCENT Tech Note — Wayanad gram panchayat net-zero planning example (Meenangadi). Large forest carbon sink (AFOLU negative). Agri-tourism economy with low industrial base."
     },
 }
 
