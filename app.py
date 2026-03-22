@@ -920,6 +920,28 @@ with st.sidebar:
     if preset_choice != "— Manual Entry —":
         p = CITY_PRESETS[preset_choice]
         st.info(p["note"], icon="ℹ️")
+        # Force-update widget session state whenever preset changes so that
+        # number_input widgets (keyed b1…a1) actually reflect the preset values.
+        _last_key = "_last_preset_loaded"
+        if st.session_state.get(_last_key) != preset_choice:
+            em = p["emissions"]
+            key_map = {
+                "b1": "Buildings – Residential",
+                "b2": "Buildings – Commercial",
+                "b3": "Buildings – Public & Inst.",
+                "b4": "Buildings – Industrial",
+                "t1": "Transport – On Road",
+                "t2": "Transport – Railway",
+                "t3": "Transport – Water/Aviation",
+                "w1": "Waste – Solid Waste",
+                "w2": "Waste – Organic Treatment",
+                "w3": "Waste – Wastewater",
+                "i1": "IPPU",
+                "a1": "AFOLU",
+            }
+            for wkey, sector in key_map.items():
+                st.session_state[wkey] = em.get(sector, 0)
+            st.session_state[_last_key] = preset_choice
     st.divider()
 
     # ── A. Basic Information ──────────────────────────────────────────────────
