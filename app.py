@@ -974,7 +974,7 @@ with st.sidebar:
     st.divider()
 
     # ── A. Basic Information ──────────────────────────────────────────────────
-    st.markdown("###Basic Information")
+    st.markdown("### Basic Information")
 
     all_states = sorted(set(c["state"] for c in INDIA_CITIES))
 
@@ -1014,7 +1014,7 @@ with st.sidebar:
     st.divider()
 
     # ── A2. Years & Growth ────────────────────────────────────────────────────
-    st.markdown("###Years & Growth Rate")
+    st.markdown("### Years & Growth Rate")
     _pby = CITY_PRESETS[preset_choice]["base_year"] if preset_choice != "— Manual Entry —" else 2025
     _pi1 = CITY_PRESETS[preset_choice]["interim1"] if preset_choice != "— Manual Entry —" else 2030
     _pi2 = CITY_PRESETS[preset_choice]["interim2"] if preset_choice != "— Manual Entry —" else 2040
@@ -1044,7 +1044,7 @@ with st.sidebar:
     st.divider()
 
     # ── B–H. Sector Emissions ─────────────────────────────────────────────────
-    st.markdown("###Sector Emissions (t CO₂e/yr)")
+    st.markdown("### Sector Emissions (t CO₂e/yr)")
     st.markdown("<p style='color:rgba(240,234,214,0.6);font-size:0.75rem;margin:0 0 6px 0;'>Enter base year emissions per sub-sector</p>", unsafe_allow_html=True)
 
     # Get preset emissions
